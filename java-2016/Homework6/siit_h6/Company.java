@@ -61,7 +61,7 @@ public class Company {
 	/**
 	 * Displays the employees in role specific lists.
 	 */
-	public void listByRole() {
+	public void listEmployees() {
 		Set set = company.entrySet();
 		Iterator iterator = set.iterator();
 		while (iterator.hasNext()) {

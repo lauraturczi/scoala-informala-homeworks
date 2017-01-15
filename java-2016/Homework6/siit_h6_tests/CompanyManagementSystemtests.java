@@ -2,6 +2,7 @@ package siit_h6_tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import siit_h6.Company;
 import siit_h6.Employee;
 import siit_h6.Company.Role;
 import siit_h6.CompanyManagementSystem;
+import org.mockito.Mockito;
 
 public class CompanyManagementSystemtests {
 
@@ -19,8 +21,6 @@ public class CompanyManagementSystemtests {
 	public void addEmployeeTest() {
 		// given
 		Company company = new Company();
-		HashMap<Role, Employee> hMap = new HashMap<>();
-
 		Employee manager = new Employee("George", 10);
 		company.addEmployee(manager, Role.MANAGER);
 		List<Employee> empl = company.getAllEmployees();
@@ -28,7 +28,7 @@ public class CompanyManagementSystemtests {
 	}
 
 	@Test
-	public void compareTest() {
+	public void compareTestEmployeesNotSorted() {
 		// given
 		Employee secManager = new Employee("Ana", 2);
 		Employee developer = new Employee("Pete", 15);
@@ -36,10 +36,31 @@ public class CompanyManagementSystemtests {
 		company.addEmployee(secManager, Role.MANAGER);
 		company.addEmployee(developer, Role.DEVELOPER);
 		List<Employee> empl = company.getAllEmployees();
+		List<Employee> sortedEmployees = new ArrayList();
+		sortedEmployees.add(developer);
+		sortedEmployees.add(secManager);
 		// when
 		Collections.sort(empl, Employee.YEARS_OF_SERVICE);
 		// then
+		assertArrayEquals(sortedEmployees.toArray(), empl.toArray());
+	}
 
+	@Test
+	public void compareTestEmployeesAlreadySorted() {
+		// given
+		Employee secManager = new Employee("Ana", 2);
+		Employee developer = new Employee("Pete", 15);
+		Company company = new Company();
+		company.addEmployee(developer, Role.DEVELOPER);
+		company.addEmployee(secManager, Role.MANAGER);
+		List<Employee> empl = company.getAllEmployees();
+		List<Employee> sortedEmployees = new ArrayList();
+		sortedEmployees.add(developer);
+		sortedEmployees.add(secManager);
+		// when
+		Collections.sort(empl, Employee.YEARS_OF_SERVICE);
+		// then
+		assertArrayEquals(sortedEmployees.toArray(), empl.toArray());
 	}
 
 	@Test
@@ -62,11 +83,33 @@ public class CompanyManagementSystemtests {
 		accountant.setHasParking(true);
 		engineer.setHasParking(false);
 		developer.setHasParking(false);
+		List<Employee> employeesNoParkingExpected = new ArrayList();
+		employeesNoParkingExpected.add(developer);
+		employeesNoParkingExpected.add(engineer);
+		employeesNoParkingExpected.add(secManager);
+		List<Employee> employeesNoParkingActual = new ArrayList();
 		// when
-		system.getParkingInfo(company);
+		employeesNoParkingActual = system.getParkingInfo(company);
 		// then
-		// assertEquals()
+		assertArrayEquals(employeesNoParkingExpected.toArray(), employeesNoParkingActual.toArray());
 
 	}
 
+	@Test
+	public void testToStringEmployee() {
+		Employee employee = new Employee("George", 10);
+		String expected = "Employee [name=George, yearsOfService=10]";
+		assertEquals(expected, employee.toString());
+	}
+
+	@Test
+	public void testToStringCompany() {
+		Employee manager = new Employee("George", 10);
+		Employee accountant = new Employee("Jen", 5);
+		Company company = new Company();
+		company.addEmployee(manager, Role.MANAGER);
+		company.addEmployee(accountant, Role.ACCOUNTANT);
+		String expected = "{MANAGER=[Employee [name=George, yearsOfService=10]], ACCOUNTANT=[Employee [name=Jen, yearsOfService=5]]}";
+		assertEquals(expected, company.toString());
+	}
 }

@@ -33,7 +33,7 @@ public class CompanyManagementSystem {
 	 * 
 	 * @param company
 	 */
-	public void getParkingInfo(Company company) {
+	public List<Employee> getParkingInfo(Company company) {
 		List<Employee> empl = company.getAllEmployees();
 		Collections.sort(empl, Employee.YEARS_OF_SERVICE);
 		for (Employee employee : empl) {
@@ -43,10 +43,11 @@ public class CompanyManagementSystem {
 		for (Boolean key : hMap.keySet()) {
 			List<Employee> emp = hMap.get(key);
 			if (key == false) {
-				System.out.println("Employees without parking\n" + emp);
-
+				//System.out.println("Employees without parking\n" + emp);
+				empl=emp;
 			}
 		}
+		return empl;
 
 	}
 
