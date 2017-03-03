@@ -1,0 +1,21 @@
+create table accomodation (
+id serial primary key not null,
+   type varchar (32),
+    bed_type varchar (32),
+    max_guests int,
+    description varchar(512)
+);
+
+create table room_fair (
+id serial primary key not null,
+   value double precision,
+    season varchar (32)
+);
+
+create table accomodation_fair_relation (
+    id serial primary key not null,
+    id_accomodation int not null,
+    id_room_fair int not null,
+    foreign key (id_accomodation) references accomodation(id),
+    foreign key (id_room_fair) references room_fair(id)
+)
