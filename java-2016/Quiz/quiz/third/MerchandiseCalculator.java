@@ -4,6 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * MerchandiseCalculator calculates profit and value per batch shipped. The
+ * delivery is done in an time interval equal in seconds with the distance to
+ * destination.
+ * 
+ * @author Laura version 3.0
+ *
+ */
+
 public class MerchandiseCalculator extends Thread {
 	private int valueMerchandise;
 	private double profit;

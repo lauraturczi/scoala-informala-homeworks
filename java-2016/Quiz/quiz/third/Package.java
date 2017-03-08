@@ -2,14 +2,20 @@ package quiz.third;
 
 import java.util.Date;
 
-
+/**
+ * Instances of class Package represent the packages the system needs to
+ * organize.
+ * 
+ * @author Laura
+ * @version 3.0
+ */
 public class Package implements Comparable<Package> {
-	
+
 	private int value;
 	private Date date;
 	private String location;
 	private int distance;
-	
+
 	public String getLocation() {
 		return location;
 	}
@@ -85,7 +91,8 @@ public class Package implements Comparable<Package> {
 	}
 
 	@Override
-	public int compareTo(Package o) {{
+	public int compareTo(Package o) {
+		{
 			return this.getLocation().compareTo(o.getLocation());
 		}
 	}
